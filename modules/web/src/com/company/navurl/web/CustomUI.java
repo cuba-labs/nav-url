@@ -32,7 +32,7 @@ public class CustomUI extends AppUI {
 
     private void enter(String fragment) {
         // open window here
-        log.info("Enter URL state '{}'", fragment);
+        log.info("Enter URL state '{}'", StringUtils.trimToEmpty(fragment));
 
         // check if we logged in
         if (getApp().getConnection().isAuthenticated()) {
