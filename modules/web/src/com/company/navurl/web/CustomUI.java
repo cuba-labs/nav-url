@@ -6,6 +6,7 @@ import com.haulmont.cuba.gui.config.WindowInfo;
 import com.haulmont.cuba.web.AppUI;
 import com.haulmont.cuba.web.WebWindowManager;
 import com.vaadin.server.VaadinRequest;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
@@ -33,20 +34,25 @@ public class CustomUI extends AppUI {
         // open window here
         log.info("Enter URL state '{}'", fragment);
 
-        WindowInfo windowInfo = windowConfig.findWindowInfo(fragment);
         // check if we logged in
         if (getApp().getConnection().isAuthenticated()) {
-            if (windowInfo != null) {
-                // check if already opened
-                WebWindowManager wm = getApp().getWindowManager();
+            WebWindowManager wm = getApp().getWindowManager();
 
-                boolean hasWindow = wm.getOpenWindows().stream()
-                        .anyMatch(w -> windowInfo.getId().equals(w.getId()));
-                if (!hasWindow) {
-                    wm.openWindow(windowInfo, OpenType.THIS_TAB);
+            if (StringUtils.isNotEmpty(fragment)) {
+                WindowInfo windowInfo = windowConfig.findWindowInfo(fragment);
+                if (windowInfo != null) {
+                    // check if already opened
+
+                    boolean hasWindow = wm.getOpenWindows().stream()
+                            .anyMatch(w -> windowInfo.getId().equals(w.getId()));
+                    if (!hasWindow) {
+                        wm.openWindow(windowInfo, OpenType.NEW_TAB);
+                    }
+                } else {
+                    getPage().setUriFragment("");
                 }
             } else {
-                getPage().setUriFragment("");
+                wm.closeAllTabbedWindows();
             }
         }
     }

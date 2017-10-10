@@ -12,3 +12,6 @@ Key points of customization:
 - com.company.navurl.web.CustomWindowManager
 
 Sample application uses SINGLE mode of WorkArea
+
+You can open screens of the application using the following URL format:
+http://localhost:8080/app/#sec$User.browse

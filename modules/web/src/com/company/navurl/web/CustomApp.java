@@ -1,6 +1,7 @@
 package com.company.navurl.web;
 
 import com.haulmont.cuba.gui.WindowManager;
+import com.haulmont.cuba.gui.WindowManager.OpenType;
 import com.haulmont.cuba.gui.config.WindowInfo;
 import com.haulmont.cuba.security.global.LoginException;
 import com.haulmont.cuba.web.Connection;
@@ -25,7 +26,7 @@ public class CustomApp extends DefaultApp {
                     if (windowInfo != null) {
                         // check if we logged in
                         WebWindowManager wm = getWindowManager();
-                        wm.openWindow(windowInfo, WindowManager.OpenType.THIS_TAB);
+                        wm.openWindow(windowInfo, OpenType.NEW_TAB);
                     } else {
                         page.setUriFragment("");
                     }
